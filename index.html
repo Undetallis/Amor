@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>UNDETALLIS — Secuencial</title>
+<title>UNDETALLIS — Aleatorio Sin Repetir</title>
 
-<!-- Google tag -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GFTY2SWSM"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -29,8 +28,6 @@
         padding: 20px;
         box-sizing: border-box;
     }
-
-    /* Fondo */
     #fondo {
         position: fixed;
         top: 0;
@@ -44,20 +41,16 @@
         filter: blur(4px) brightness(0.8);
         z-index: -1;
     }
-
     @keyframes fondoMovimiento {
         0% { transform: scale(1.02) translate(-8px, -5px); }
         100% { transform: scale(1.06) translate(6px, 5px); }
     }
-
-    /* Rebote */
     @keyframes rebote {
         0%   { opacity: 0; transform: scale(0.6); filter: blur(4px); }
         40%  { opacity: 1; transform: scale(1.08); }
         70%  { transform: scale(0.94); }
         100% { transform: scale(1); filter: blur(0); }
     }
-
     #fraseBox {
         max-width: 90%;
         padding: 35px 45px;
@@ -69,16 +62,12 @@
         text-align: center;
         line-height: 1.25;
         box-shadow: 0 0 30px rgba(0,0,0,0.45);
-
         display: flex;
         justify-content: center;
         align-items: center;
-
         animation: rebote 0.8s ease-out;
-
         backdrop-filter: blur(6px);
     }
-
     @media (max-width: 600px) {
         #fraseBox {
             font-size: 28px;
@@ -88,14 +77,12 @@
 </style>
 
 <!-- ===================== -->
-<!--   FIREBASE + FRASES   -->
+<!--   FIREBASE + LÓGICA   -->
 <!-- ===================== -->
 <script type="module">
-    /* Firebase SDK imports */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
     import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
-    /* === TU NUEVO FIREBASE === */
     const firebaseConfig = {
       apiKey: "AIzaSyARakiJy-Lm40MzJq9QarzmMlQBgGNsvmU",
   authDomain: "amor-17862.firebaseapp.com",
@@ -109,115 +96,138 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    /* === 80 FRASES PICANTES === */
+    /* ----------------------------- */
+    /*      TUS 80 FRASES            */
+    /* ----------------------------- */
     const frases = [
-"POV: te miro y entiendo por qué nada antes tuvo sentido.",
-"Contigo todo es suave, incluso mis días más rotos.",
-"Eres mi lugar favorito aunque el mundo esté lleno de destinos.",
-"Qué suerte la mía que tu nombre suene a hogar.",
-"Amarte no es algo que hago, es algo que soy.",
-"Si el corazón hablara, diría tu nombre en cada latido.",
-"No sé qué hice para merecerte, pero quiero seguir haciéndolo.",
-"Te pienso bonito, te siento bonito, te quiero bonito.",
-"Qué lindo es coincidir contigo en un mundo tan caótico.",
-"El universo hizo muchas cosas, pero contigo se lució.",
-"Contigo aprendí que la paz tiene forma de abrazo.",
-"Siempre es hoy contigo, nunca se siente tarde.",
-"Mi lugar seguro no es un sitio, es tu voz diciendo que todo estará bien.",
-"Si me dieran a elegir otra vez, igual te escogería sin mirar.",
-"Qué hermosa casualidad que tú y yo existamos al mismo tiempo.",
-"Eres mi historia favorita, incluso en los capítulos difíciles.",
-"Quiero todo contigo: lo bonito, lo difícil, lo nuestro.",
-"Tu amor es ese tipo de magia que no necesita truco.",
-"Te quiero sin prisas, sin pausas, pero con toda el alma.",
-"Qué rico es amar a alguien que también te elige cada día.",
-"Lo nuestro se siente como un abrazo que te cubre el alma.",
-"Hay personas que llegan para quedarte… tú fuiste eso para mí.",
-"Me gustas tú, me gusta como me miras, me gusta lo que somos.",
-"Qué bendición encontrarte en un mundo donde todos buscan.",
-"Si el amor fuera un lugar, sería tu pecho sobre el mío.",
-"Mi corazón hace hogar donde tú descansas.",
-"Eres la calma que no sabía que necesitaba.",
-"Qué hermoso quererte así, sin razón, sin límite, sin miedo.",
-"Quiero ser la razón por la que sonríes cuando nadie te ve.",
-"Te juro que en todas mis versiones, te elijo.",
-"Eres ese “ya llegué” que alivia cualquier tormenta.",
-"Qué suerte que el destino supo quién necesitaba a quién.",
-"Te quiero suave, pero también te quiero para siempre.",
-"Tu risa es la prueba de que lo bonito sí existe.",
-"Gracias por existir justo cuando pensé que no quedaba magia.",
-"Me enamoras sin hacer ruido, sin avisar, sin intentar.",
-"Eres mi cosa favorita del día, siempre.",
-"Quiero un futuro donde tu nombre siga sonando en mis planes.",
-"Te quiero aquí, cerca, cerquita, siempre cerquita.",
-"POV: te abrazo y el mundo deja de doler.",
-"Eres mi mejor “sí”, mi mejor decisión y mi mejor casualidad.",
-"Ojalá el tiempo pase lento cuando estoy contigo.",
-"Lo nuestro no grita, pero brilla.",
-"Si tu corazón es viaje, yo ya compré boleto de ida.",
-"Qué lindo es amarte sin miedo.",
-"Me haces querer quedarme incluso en mis días de huida.",
-"Eres mi lugar favorito para descansar la mirada.",
-"POV: somos dos almas que se reconocieron sin preguntar.",
-"Qué bonito cuando tu mano busca la mía sin pensarlo.",
-"Te quiero en todos mis idiomas, incluso los que aún no invento.",
-"Amarte es fácil. No amarte sería imposible.",
-"Qué suerte la tuya de que mi corazón te quiera tanto… y qué suerte la mía de que tú quieras quedarte.",
-"El amor no debería doler, y contigo aprendí que puede sanar.",
-"Contigo quiero mis domingos lentos y mis lunes menos pesados.",
-"Eres el mensaje que siempre quiero leer dos veces.",
-"Te quiero como quien encuentra algo que no sabía que buscaba.",
-"POV: tú y yo intentando no enamorarnos más… fracasando suavemente.",
-"No sé qué será, pero contigo todo se siente bien.",
-"Eres el tipo de amor que quiero contar, no esconder.",
-"Qué bonito cuando el corazón reconoce a su persona.",
-"Si tú supieras lo bonito que te pienso.",
-"Hay abrazos que te reparan. Los tuyos son de esos.",
-"Te quiero sin final, como si el alma no entendiera de límites.",
-"Qué bendición coincidir en esta vida contigo.",
-"Eres el lugar donde mi caos respira tranquilo.",
-"Te quiero así, sin reloj, sin distancia, sin dudas.",
-"Si el amor fuera un sonido, sería tu risa.",
-"Me gusta cómo me miras… como si supieras que soy tuyo.",
-"POV: me acerco a ti y la vida se vuelve más fácil.",
-"Lo mejor de mis días es que tú existas en ellos.",
-"Amarte es mi manera favorita de vivir.",
-"No estás en mis planes… eres todo el plan.",
-"Qué rico es amar a alguien que te entiende con los ojos.",
-"Te quiero despacio, te quiero profundo, te quiero bien.",
-"Eres la calma después de todas mis tormentas.",
-"Quiero lo nuestro en todos los universos posibles.",
-"Tu amor es esa lucecita que siempre encuentra mi oscuridad.",
-"POV: tú y yo, sin prisa, pero con ganas de todo.",
-"Qué lindo es cuando te abrazo y todo encaja.",
-"Tu nombre y mi corazón tienen algo.",
-"Qué suerte que existas justo donde te necesito.",
-"Si tú eres sueño, no quiero despertar.",
-"Me gustas tanto que te pienso hasta en mis silencios."
-
+"Te amo porque a tu lado todo tiene sentido",
+"Eres mi lugar favorito en el mundo",
+"Mi día mejora solo con escuchar tu voz",
+"Tu sonrisa es mi razón favorita para sonreír",
+"Amarte es mi parte preferida de la vida",
+"Contigo todo es más bonito",
+"Eres la persona que siempre soñé",
+"Mi corazón late distinto desde que te conocí",
+"Eres el abrazo que siempre quiero tener",
+"Gracias por existir justo donde te necesitaba",
+"Me haces creer en el amor cada día más",
+"Quiero construir mis días contigo",
+"Eres mi paz en medio del caos",
+"Me enamoras con cosas que ni te das cuenta",
+"Te elegiría una y mil veces",
+"Tu amor es mi refugio",
+"Eres la casualidad más hermosa de mi vida",
+"Contigo quiero todo lo que dure para siempre",
+"Eres mi historia favorita",
+"Tu felicidad es ahora mi prioridad",
+"Me encanta cómo encajas en mis días",
+"Eres la forma más bonita de destino",
+"Eres ese detalle que nunca supe pedir",
+"Tu amor llegó a mi vida en el momento perfecto",
+"Me haces querer ser mejor persona",
+"Eres mi alegría disfrazada de persona",
+"Quiero que sigamos siendo nosotros",
+"Eres el sueño que nunca quiero despertar",
+"A tu lado todo se siente ligero",
+"Me haces feliz sin siquiera intentarlo",
+"Eres mi presente y mi futuro favorito",
+"Gracias por hacerme sentir tan amado",
+"Me enamora la manera en que me miras",
+"Tu voz es mi melodía favorita",
+"Qué suerte la mía de coincidir contigo",
+"Eres el hogar donde mi corazón hace clic",
+"Contigo los días malos pesan menos",
+"Te amo más de lo que sé explicar",
+"Eres mi pensamiento favorito del día",
+"Quiero quedarme en tu vida, no en tus recuerdos",
+"Tu amor me hace valiente",
+"Me enamoras sin hablar",
+"Gracias por quedarte incluso cuando era difícil",
+"Eres lo mejor que me pasó sin buscarlo",
+"Tu risa tiene el poder de arreglarme",
+"Cada momento contigo vale la pena",
+"Eres mi lugar seguro",
+"Me gusta cómo me miras como si fuera especial",
+"Amarte es tan natural como respirar",
+"Contigo descubrí lo que es sentir de verdad",
+"Eres la persona con la que quiero compartirlo todo",
+"Qué bonito es quererte y que me quieras",
+"Eres mi eterno “quédate”",
+"Tu amor ilumina mis días",
+"Me enamora tu esencia",
+"Contigo todo es más fácil",
+"Eres mi complicidad favorita",
+"Mi corazón se siente en casa contigo",
+"Me encanta saber que te tengo a ti",
+"Eres la mejor página de mi historia",
+"Gracias por enseñarme un amor tan bonito",
+"Nunca imaginé querer así",
+"Tu amor me encontró distinto y me hizo mejor",
+"Eres ese detalle que me cambia el día",
+"Mi futuro tiene tu nombre en cada plan",
+"Tu simple existencia me hace feliz",
+"Eres mi coincidencia más perfecta",
+"Tu amor me salva sin que lo notes",
+"Qué suerte tenerte",
+"Me enamora cómo eres sin esfuerzo",
+"No sabía que necesitaba a alguien así hasta que llegaste",
+"Mi corazón sonríe cuando piensa en ti",
+"Te quiero incluso en tus días difíciles",
+"Quiero más momentos contigo",
+"Eres el mejor “sí” que he dicho",
+"Mi alma reconoce la tuya",
+"Eres mi pequeño gran milagro",
+"Gracias por hacerme sentir tan especial",
+"Tu amor es el regalo más bonito que tengo",
+"Eres el antes y después de mi vida"
     ];
 
-    /* ========================= */
-    /*     FUNCIÓN PRINCIPAL     */
-    /* ========================= */
+    /* Barajar array */
+    function mezclar(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
     async function cargarFrase() {
         const box = document.getElementById("fraseBox");
 
-        const orderRef = ref(db, "globalOrder");
-        const snapshot = await get(orderRef);
+        const ordenRef = ref(db, "orden");
+        const posRef   = ref(db, "pos");
 
-        let index = snapshot.exists() ? snapshot.val() : 0;
-        const frase = frases[index] ?? "Error: frase no encontrada";
+        const ordenSnap = await get(ordenRef);
+        const posSnap   = await get(posRef);
 
+        let orden = ordenSnap.exists() ? ordenSnap.val() : null;
+        let pos = posSnap.exists() ? posSnap.val() : 0;
+
+        if (!orden || orden.length !== frases.length) {
+            orden = [...Array(frases.length).keys()];
+            mezclar(orden);
+            await set(ordenRef, orden);
+            pos = 0;
+            await set(posRef, 0);
+        }
+
+        const frase = frases[orden[pos]];
         box.textContent = frase;
 
-        /* Reiniciar animación rebote */
         box.style.animation = "none";
         void box.offsetWidth;
         box.style.animation = "rebote 0.8s ease-out";
 
-        index = (index + 1) % frases.length;
-        set(orderRef, index);
+        pos++;
+
+        if (pos >= frases.length) {
+            orden = [...Array(frases.length).keys()];
+            mezclar(orden);
+            pos = 0;
+            await set(ordenRef, orden);
+        }
+
+        await set(posRef, pos);
     }
 
     window.onload = cargarFrase;
